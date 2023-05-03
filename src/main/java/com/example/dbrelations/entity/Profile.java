@@ -1,5 +1,6 @@
 package com.example.dbrelations.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -13,6 +14,10 @@ public class Profile {
     private String twitter;
     private String instagram;
     private String email;
+
+    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Player player;
 
     public Profile() {}
 
@@ -59,6 +64,14 @@ public class Profile {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     @Override
