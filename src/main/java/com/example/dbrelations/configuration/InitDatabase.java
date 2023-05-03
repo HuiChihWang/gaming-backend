@@ -24,8 +24,14 @@ public class InitDatabase {
         List<Player> players = createPlayers();
         List<GameCharacter> characters = createCharacters();
 
+        players.get(0).addCharacter(characters.get(0));
+        players.get(0).addCharacter(characters.get(1));
+        players.get(1).addCharacter(characters.get(2));
+        players.get(2).addCharacter(characters.get(3));
+
         List<Player> savedPlayers = playerRepository.saveAll(players);
-        List<GameCharacter> savedCharacters = characterRepository.saveAll(characters);
+        List<GameCharacter> savedCharacters = characterRepository.findAll();
+
         return args -> {
             for (Player player: savedPlayers) {
                 logger.info("Preload Player: {}", player);
