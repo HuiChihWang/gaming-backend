@@ -3,6 +3,8 @@ package com.example.dbrelations.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +19,10 @@ public class Player {
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     @JsonManagedReference
     private Profile profile;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "player_id")
+    private final List<GameCharacter> characters = new ArrayList<>();
 
     public Player() {}
 
@@ -63,6 +69,18 @@ public class Player {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public List<GameCharacter> getCharacters() {
+        return characters;
+    }
+
+    public void addCharacter(GameCharacter character) {
+        this.characters.add(character);
+    }
+
+    public void removeCharacter(GameCharacter character) {
+        this.characters.remove(character);
     }
 
     @Override
