@@ -20,7 +20,10 @@ public class Player {
     @JsonManagedReference
     private Profile profile;
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "player",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<GameCharacter> characters = new ArrayList<>();
 
     public Player() {}

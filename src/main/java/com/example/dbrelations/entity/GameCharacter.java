@@ -11,16 +11,20 @@ public class GameCharacter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @ManyToOne
-    @JoinColumn(name = "player_id")
+    @JoinColumn(name = "player_id", nullable = false)
     private Player player;
 
     public GameCharacter(String name, Gender gender, Role role) {
