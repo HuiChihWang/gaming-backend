@@ -12,7 +12,6 @@ public class Profile {
 
     private String twitter;
     private String instagram;
-
     private String email;
 
     public Profile() {}
