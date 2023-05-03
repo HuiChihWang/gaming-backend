@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlayerService {
@@ -20,6 +21,17 @@ public class PlayerService {
 
     public List<Player> getAllPlayers() {
         return playerRepository.findAll();
+    }
+
+    public Player getPlayerById(long id) {
+        Optional<Player> player = playerRepository.findById(id);
+
+        //TODO: create not found exception
+        if (player.isEmpty()) {
+            throw new RuntimeException("Player doesn't exist.");
+        }
+
+        return player.get();
     }
 
     public Player createPlayer(NewPlayerRequest request) {
