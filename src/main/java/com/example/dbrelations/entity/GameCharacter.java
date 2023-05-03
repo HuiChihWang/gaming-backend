@@ -19,6 +19,10 @@ public class GameCharacter {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @ManyToOne
+    @JoinColumn(name = "player_id")
+    private Player player;
+
     public GameCharacter(String name, Gender gender, Role role) {
         this.name = name;
         this.gender = gender;
@@ -59,6 +63,14 @@ public class GameCharacter {
         this.role = role;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,6 +91,7 @@ public class GameCharacter {
                 ", name='" + name + '\'' +
                 ", gender=" + gender +
                 ", role=" + role +
+                ", playerId=" + player.getId() +
                 '}';
     }
 }

@@ -16,13 +16,12 @@ public class Player {
     private String lastName;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @JoinColumn(name = "profile_id")
     @JsonManagedReference
     private Profile profile;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "player_id")
-    private final List<GameCharacter> characters = new ArrayList<>();
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GameCharacter> characters = new ArrayList<>();
 
     public Player() {}
 
@@ -77,6 +76,7 @@ public class Player {
 
     public void addCharacter(GameCharacter character) {
         this.characters.add(character);
+        character.setPlayer(this);
     }
 
     public void removeCharacter(GameCharacter character) {
