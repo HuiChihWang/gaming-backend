@@ -36,4 +36,10 @@ public class PlayerController {
         Player newPlayer = playerService.createPlayer(request);
         return ResponseEntity.ok(newPlayer);
     }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<?> deletePlayer(@PathVariable("id") long playerId) {
+        playerService.deletePlayer(playerId);
+        return ResponseEntity.ok().build();
+    }
 }

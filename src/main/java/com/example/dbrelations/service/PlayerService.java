@@ -41,4 +41,13 @@ public class PlayerService {
         Player newPlayer = new Player(request.firstName(), request.lastName(), profile);
         return playerRepository.save(newPlayer);
     }
+
+    @Transactional
+    public void deletePlayer(long playerId) {
+        if (!playerRepository.existsById(playerId)) {
+            throw  new RuntimeException();
+        }
+
+        playerRepository.deleteById(playerId);
+    }
 }
