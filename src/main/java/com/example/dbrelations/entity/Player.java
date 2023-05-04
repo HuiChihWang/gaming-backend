@@ -1,5 +1,6 @@
 package com.example.dbrelations.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -24,7 +25,8 @@ public class Player {
             mappedBy = "player",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private List<GameCharacter> characters = new ArrayList<>();
+    @JsonBackReference
+    private final List<GameCharacter> characters = new ArrayList<>();
 
     public Player() {}
 

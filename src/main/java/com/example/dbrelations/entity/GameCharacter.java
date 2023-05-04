@@ -2,6 +2,7 @@ package com.example.dbrelations.entity;
 
 import com.example.dbrelations.utility.Gender;
 import com.example.dbrelations.utility.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -25,6 +26,7 @@ public class GameCharacter {
 
     @ManyToOne
     @JoinColumn(name = "player_id", nullable = false)
+    @JsonManagedReference
     private Player player;
 
     public GameCharacter(String name, Gender gender, Role role) {
