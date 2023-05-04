@@ -41,5 +41,13 @@ public class GameCharacterService {
         return characterRepository.save(newCharacter);
     }
 
+    @Transactional
+    public void deleteCharacter(long characterId) {
+        //TODO: create exception to handle error
+        if (!characterRepository.existsById(characterId)) {
+            throw new RuntimeException();
+        }
 
+        characterRepository.deleteById(characterId);
+    }
 }
