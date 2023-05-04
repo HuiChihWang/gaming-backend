@@ -1,10 +1,10 @@
 package com.example.dbrelations.configuration;
 
-import com.example.dbrelations.entity.GameCharacter;
-import com.example.dbrelations.entity.Player;
-import com.example.dbrelations.entity.Profile;
+import com.example.dbrelations.entity.*;
 import com.example.dbrelations.repository.GameCharacterRepository;
+import com.example.dbrelations.repository.GameRoleRepository;
 import com.example.dbrelations.repository.PlayerRepository;
+import com.example.dbrelations.repository.SkillRepository;
 import com.example.dbrelations.utility.Gender;
 import com.example.dbrelations.utility.Role;
 import org.slf4j.LoggerFactory;
@@ -19,6 +19,59 @@ import java.util.List;
 public class InitDatabase {
     private static final Logger logger =  LoggerFactory.getLogger(InitDatabase.class);
 
+    @Bean
+    CommandLineRunner initDatabase2(SkillRepository skillRepository, GameRoleRepository roleRepository) {
+        List<GameRole> roles = roleRepository.saveAll(getRoles());
+        List<Skill> skills = skillRepository.saveAll(getSkills());
+
+        roles.get(0).addSkill(skills.get(3));
+        roles.get(0).addSkill(skills.get(6));
+
+        roles.get(1).addSkill(skills.get(2));
+        roles.get(1).addSkill(skills.get(5));
+
+        roles.get(2).addSkill(skills.get(0));
+        roles.get(2).addSkill(skills.get(3));
+
+        roles.get(3).addSkill(skills.get(1));
+        roles.get(3).addSkill(skills.get(2));
+        roles.get(3).addSkill(skills.get(4));
+
+        List<GameRole> updatedRoles = roleRepository.saveAll(roles);
+
+        return args -> {
+            for (Skill skill: skills) {
+                logger.info("Preload Skill: {}", skill);
+            }
+
+            for (GameRole role: updatedRoles) {
+                logger.info("Preload Role: {}", role);
+            }
+        };
+    }
+
+    private List<GameRole> getRoles() {
+        return List.of(
+                new GameRole("magician"),
+                new GameRole("warrior"),
+                new GameRole("cleric"),
+                new GameRole("thief")
+        );
+
+
+    }
+    private List<Skill> getSkills() {
+        return List.of(
+                new Skill("recover"),
+                new Skill("flash"),
+                new Skill("stab"),
+                new Skill("magic attack"),
+                new Skill("steal"),
+                new Skill("strengthen"),
+                new Skill("magic explosion")
+        );
+
+    }
     @Bean
     CommandLineRunner initDataBase(PlayerRepository playerRepository, GameCharacterRepository characterRepository) {
         List<Player> players = createPlayers();
