@@ -29,6 +29,10 @@ public class GameCharacterService {
 
     @Transactional
     public GameCharacter createCharacter(CreateCharacterRequest request) {
+        if (characterRepository.existsByName(request.name())) {
+            throw  new RuntimeException();
+        }
+
         Player player = playerService.getPlayerById(request.playerId());
 
         GameCharacter newCharacter = new GameCharacter(
